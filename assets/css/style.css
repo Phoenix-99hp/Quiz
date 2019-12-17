@@ -1,0 +1,41 @@
+#timeLabel, #timeCount {
+    float: right;
+}
+
+#scores {
+    float: left;
+}
+
+#card {
+    border: 2px solid black;
+    margin: 70px 100px;
+    text-align: center;
+}
+
+#container {
+    border: 2px solid black;
+    margin: 70px 100px;
+    text-align: center;
+}
+
+#title {
+    margin-bottom: 15px;
+}
+
+.btn {
+    margin-bottom: 10px
+}
+
+.hide {
+   display: none;
+}
+
+
+
+/* h1, p { 
+    text-align: center;
+}
+
+#start {
+    text-align: center;
+} */
