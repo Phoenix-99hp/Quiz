@@ -6,7 +6,7 @@
     float: left;
 }
 
-#card {
+#card, #card2 {
     border: 2px solid black;
     margin: 70px 100px;
     text-align: center;
@@ -28,6 +28,19 @@
 
 .hide {
    display: none;
+}
+
+/*#newScore {
+    background-color: rgb(187, 83, 83);
+    color: white;
+}
+*/
+
+.score-div {
+    margin-bottom: 15px;
+    background: crimson;
+    border: 2px solid white;
+    color: white;
 }
 
 
