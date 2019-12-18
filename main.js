@@ -36,23 +36,16 @@ var submitBtn = document.querySelector(".submit");
 var label = document.getElementById("label");
 var newScoreEl = document.getElementById("newScore");
 var scoreDiv = document.querySelector(".score-div");
+var viewBtn = document.querySelector(".view");
 
 var currentQuestionIndex;
 var interval;
 var highScores = [];
-// var highScore;
-// var hiScores = localStorage.getItem("scores");
+init();
 
 startBtn.addEventListener("click", function (e) {
     startQuiz();
 });
-// pEl.classList.add("hide");
-// startBtn.classList.add("hide");
-// for (i = 0; i < answerBtns.length; i++) {
-//     answerBtns[i].classList.remove("hide");
-// }
-// var count = 75;
-// countSpan += count;
 
 function startQuiz() {
     currentQuestionIndex = 0;
@@ -87,43 +80,43 @@ function setQuestion() {
             e.stopPropagation();
             notification.textContent = "Correct!";
             currentQuestionIndex++;
-            // setQuestion();
+            setQuestion();
         })
         answerBtn3.addEventListener("click", function (e) {
             e.stopPropagation();
             notification.textContent = "Incorrect!";
-            currentQuestionIndex++;
             countSpan.textContent -= 10;
-            // setQuestion();
+            currentQuestionIndex++;
+            setQuestion();
         })
         answerBtn4.addEventListener("click", function (e) {
             e.stopPropagation();
             notification.textContent = "Incorrect!";
-            currentQuestionIndex++;
             countSpan.textContent -= 10;
-            // setQuestion();
+            currentQuestionIndex++;
+            setQuestion();
         })
         answerBtn1.addEventListener("click", function (e) {
             e.stopPropagation();
             notification.textContent = "Incorrect!";
-            currentQuestionIndex++;
             countSpan.textContent -= 10;
-            // setQuestion();
+            currentQuestionIndex++;
+            setQuestion();
         })
     }
     else if (currentQuestionIndex === 1) {
         answerBtn2.addEventListener("click", function (e) {
             e.stopPropagation();
             notification.textContent = "Incorrect!";
-            currentQuestionIndex++;
             countSpan.textContent -= 10;
+            currentQuestionIndex++;
             setQuestion();
         })
         answerBtn3.addEventListener("click", function (e) {
             e.stopPropagation();
             notification.textContent = "Incorrect!";
-            currentQuestionIndex++;
             countSpan.textContent -= 10;
+            currentQuestionIndex++;
             setQuestion();
         })
         answerBtn4.addEventListener("click", function (e) {
@@ -135,30 +128,30 @@ function setQuestion() {
         answerBtn1.addEventListener("click", function (e) {
             e.stopPropagation();
             notification.textContent = "Incorrect!";
-            currentQuestionIndex++;
             countSpan.textContent -= 10;
+            currentQuestionIndex++;
             setQuestion();
         })
     }
     else if (currentQuestionIndex === 2) {
         answerBtn2.addEventListener("click", function (e) {
             e.stopPropagation();
-            notification.textContent = "Incorrect!";
             countSpan.textContent -= 10;
+            notification.textContent = "Incorrect!";
             clearInterval(interval);
             endGame();
         })
         answerBtn3.addEventListener("click", function (e) {
             e.stopPropagation();
-            notification.textContent = "Incorrect!";
             countSpan.textContent -= 10;
+            notification.textContent = "Incorrect!";
             clearInterval(interval);
             endGame();
         })
         answerBtn4.addEventListener("click", function (e) {
             e.stopPropagation();
+            countSpan.texContent -= 10;
             notification.textContent = "Incorrect!";
-            countSpan.textContent -= 10;
             clearInterval(interval);
             endGame();
         })
@@ -194,193 +187,67 @@ submitBtn.addEventListener("click", function (e) {
     submitBtn.classList.add("hide");
     notification.textContent = "";
     titleEl.textContent = "Highscores";
-
-    // var newEntry = document.createElement("div");
-    // newEntry.classList.add("scoreEntry");
-    // newEntry.textContent = finalScore + " - " + initials;
-
-    var scoreContent = finalScore + " - " + initials;
-    highScores.push(scoreContent);
-    // highScore = scoreContent;
-    // storeLastScore();
+    var newScoreObject = { name: initials, total: finalScore }
+    highScores.push(newScoreObject);
     storeScores();
-    // init();
     for (var i = 0; i < highScores.length; i++) {
-        var score = highScores[i];
-
         var div = document.createElement("div");
         div.setAttribute("class", "score-div");
-        div.textContent = score;
-        // li.setAttribute("data-index", i);
-
+        div.textContent = highScores[i].name + " : " + highScores[i].total;
         newScoreEl.appendChild(div);
     }
-
-    // newScoreEl.appendChild(newEntry);
     backBtn.classList.remove("hide");
     clearBtn.classList.remove("hide");
 })
 
 backBtn.addEventListener("click", function (e) {
     e.stopPropagation();
-    pEl.classList.remove("hide");
-    startBtn.classList.remove("hide");
-    titleEl.textContent = "Football Quiz: 2019 - 2020";
-    backBtn.classList.add("hide");
-    clearBtn.classList.add("hide");
-    var scoreDiv = document.getElementsByClassName("score-div");
-    for (var i = 0; i < scoreDiv.length; i++) {
-        scoreDiv[i].classList.add("hide");
+    window.location.href = "index.html";
 
-
-        // window.location.href = "index.html";
-    }
 })
 
 clearBtn.addEventListener("click", function (e) {
     e.stopPropagation();
-    var scoreDiv = document.getElementsByClassName("score-div");
-    for (var i = 0; i < scoreDiv.length; i++) {
-        newScoreEl.removeChild(scoreDiv[i]);
-        // highScores.pop([i]);
-
-
-        // window.location.href = "index.html";
-    }
-
+    var scoreDiv = document.querySelector(".score-div");
+    newScoreEl.removeChild(scoreDiv);
+    highScores.splice(0, 1);
+    storeScores();
 })
 
-// function renderScores() {
-//     for (var i = 0; i < highScores.length; i++) {
-//         var score = highScores[i];
-
-//         var div = document.createElement("div");
-//         div.textContent = score;
-//         // li.setAttribute("data-index", i);
-
-//         newScoreEl.appendChild(div);
-//     }
-// }
-
 function init() {
-    // Get stored todos from localStorage
-    // Parsing the JSON string to an object
-    var storedScores = localStorage.getItem("scores");
-    //JSON.parse()
-    // If todos were retrieved from localStorage, update the todos array to it
+    var storedScores = JSON.parse(localStorage.getItem("scores"));
     if (storedScores !== null) {
-        // highScores = storedScores;
-        console.log(storedScores);
-        // highScores.push(storedScores);
-        storedScores.push(highScores[0]);
-        console.log(highScores);
-
+        highScores = storedScores;
     }
 }
-// Render todos to the DOM
-// renderScores();
-// }
+
 
 function storeScores() {
-    // Stringify and set "todos" key in localStorage to todos array
-    //JSON.stringify()
-    localStorage.setItem("scores", highScores);
-    var storedScores = localStorage.getItem("scores");
-    // if (storedScores !== null) {
-    //     highScores.push(storedScores);
-    // }
-    console.log(storedScores);
+    localStorage.setItem("scores", JSON.stringify(highScores));
 };
 
-// function storeLastScore() {
-//     localStorage.setItem("lastScore", highScores[0]);
-//     var storedLastScore = localStorage.getItem("lastScore");
-//     localStorage.setItem("allScores")
-
-//     highScores.push()
-// }
-    // clearBtn.addEventListener("click", function (e) {
-
-    // })
-
-    // function calculateScore() {
-    //     score = countSpan.textContent;
-    // }
-
-    // renderQuestionOne();
-
-    // if (currentQuestionIndex == 1) {
-    //     answerBtn2.addEventListener("click", function (e) {
-    //         notification.textContent = "Correct!";
-    //         setQuestion();
-    //     })
-    //     answerBtn3.addEventListener("click", function (e) {
-    //         notification.textContent = "Incorrect!";
-    //         setQuestion();
-    //     })
-    //     answerBtn4.addEventListener("click", function (e) {
-    //         notification.textContent = "Incorrect!";
-    //         setQuestion();
-    //     })
-    //     answerBtn1.addEventListener("click", function (e) {
-    //         notification.textContent = "Incorrect!";
-    //         setQuestion();
-    //     })
-    // }
-    // else if (currentQuestionIndex == 2) {
-    //     answerBtn2.addEventListener("click", function (e) {
-    //         notification.textContent = "Incorrect!";
-    //     })
-    //     answerBtn3.addEventListener("click", function (e) {
-    //         notification.textContent = "Incorrect!";
-    //     })
-    //     answerBtn4.addEventListener("click", function (e) {
-    //         notification.textContent = "Correct!";
-    //     })
-    //     answerBtn1.addEventListener("click", function (e) {
-    //         notification.textContent = "Incorrect!";
-    //     })
-    // }
-
-
-
-
-
-    // function renderQuestionOne() {
-    //     titleEl.textContent = questions[0].title;
-    //     answerBtn1.textContent = questions[0].choices[0];
-    //     answerBtn2.textContent = questions[0].choices[1];
-    //     answerBtn3.textContent = questions[0].choices[2];
-    //     answerBtn4.textContent = questions[0].choices[3];
-    // }
-
-    // function renderQuestionTwo() {
-    //     titleEl.textContent = questions[1].title;
-    //     answerBtn1.textContent = questions[1].choices[0];
-    //     answerBtn2.textContent = questions[1].choices[1];
-    //     answerBtn3.textContent = questions[1].choices[2];
-    //     answerBtn4.textContent = questions[1].choices[3];
-    // }
-
-    // function checkAnswer() {
-
-
-    // }
-
-    //   // if (answerBtn4.clicked === true) {
-    //     notification.textContent = "Correct!";
-    //     // renderQuestionThree();
-    // }
-    // else if (answerBtn1.clicked === true || answerBtn3.clicked === true ||
-    //     answerBtn2.clicked === true) {
-    //     notification.textContent = "Wrong!";
-    //     // renderQuestionThree();
-    // }
-
-    // function renderQuestionThree() {
-    //     titleEl.textContent = questions[2].title;
-    //     answerEl1.textContent = questions[2].choices[0];
-    //     answerEl2.textContent = questions[2].choices[1];
-    //     answerEl3.textContent = questions[2].choices[2];
-    //     answerEl4.textContent = questions[2].choices[3];
-    // }
+viewBtn.addEventListener("click", function (e) {
+    for (i = 0; i < answerBtns.length; i++) {
+        answerBtns[i].classList.add("hide");
+    }
+    if (titleEl.textContent == "Highscores") {
+        return;
+    }
+    else {
+        for (var i = 0; i < highScores.length; i++) {
+            var div = document.createElement("div");
+            div.setAttribute("class", "score-div");
+            div.textContent = highScores[i].name + " : " + highScores[i].total;
+            newScoreEl.appendChild(div);
+        }
+        backBtn.classList.remove("hide");
+        clearBtn.classList.remove("hide");
+        notification.textContent = "";
+        titleEl.textContent = "Highscores";
+        pEl.classList.add("hide");
+        startBtn.classList.add("hide");
+        label.classList.add("hide");
+        inputEl.classList.add("hide");
+        submitBtn.classList.add("hide");
+    }
+})
