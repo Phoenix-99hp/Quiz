@@ -30,25 +30,9 @@
    display: none;
 }
 
-/*#newScore {
-    background-color: rgb(187, 83, 83);
-    color: white;
-}
-*/
-
 .score-div {
     margin-bottom: 15px;
     background: crimson;
     border: 2px solid white;
     color: white;
 }
-
-
-
-/* h1, p { 
-    text-align: center;
-}
-
-#start {
-    text-align: center;
-} */

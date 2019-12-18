@@ -38,7 +38,7 @@ var newScoreEl = document.getElementById("newScore");
 var scoreDiv = document.querySelector(".score-div");
 var viewBtn = document.querySelector(".view");
 
-var currentQuestionIndex;
+var currentQuestionIndex = 0;
 var interval;
 var highScores = [];
 init();
@@ -48,7 +48,6 @@ startBtn.addEventListener("click", function (e) {
 });
 
 function startQuiz() {
-    currentQuestionIndex = 0;
     pEl.classList.add("hide");
     startBtn.classList.add("hide");
     for (i = 0; i < answerBtns.length; i++) {
@@ -79,28 +78,28 @@ function setQuestion() {
         answerBtn2.addEventListener("click", function (e) {
             e.stopPropagation();
             notification.textContent = "Correct!";
-            currentQuestionIndex++;
+            currentQuestionIndex = 1;
             setQuestion();
         })
         answerBtn3.addEventListener("click", function (e) {
             e.stopPropagation();
             notification.textContent = "Incorrect!";
             countSpan.textContent -= 10;
-            currentQuestionIndex++;
+            currentQuestionIndex = 1;
             setQuestion();
         })
         answerBtn4.addEventListener("click", function (e) {
             e.stopPropagation();
             notification.textContent = "Incorrect!";
             countSpan.textContent -= 10;
-            currentQuestionIndex++;
+            currentQuestionIndex = 1;
             setQuestion();
         })
         answerBtn1.addEventListener("click", function (e) {
             e.stopPropagation();
             notification.textContent = "Incorrect!";
             countSpan.textContent -= 10;
-            currentQuestionIndex++;
+            currentQuestionIndex = 1;
             setQuestion();
         })
     }
@@ -108,28 +107,28 @@ function setQuestion() {
         answerBtn2.addEventListener("click", function (e) {
             e.stopPropagation();
             notification.textContent = "Incorrect!";
-            countSpan.textContent -= 10;
-            currentQuestionIndex++;
+            countSpan.textContent -= 10
+            currentQuestionIndex = 2;
             setQuestion();
         })
         answerBtn3.addEventListener("click", function (e) {
             e.stopPropagation();
             notification.textContent = "Incorrect!";
             countSpan.textContent -= 10;
-            currentQuestionIndex++;
+            currentQuestionIndex = 2;
             setQuestion();
         })
         answerBtn4.addEventListener("click", function (e) {
             e.stopPropagation();
             notification.textContent = "Correct!";
-            currentQuestionIndex++;
+            currentQuestionIndex = 2;
             setQuestion();
         })
         answerBtn1.addEventListener("click", function (e) {
             e.stopPropagation();
             notification.textContent = "Incorrect!";
             countSpan.textContent -= 10;
-            currentQuestionIndex++;
+            currentQuestionIndex = 2;
             setQuestion();
         })
     }
@@ -161,9 +160,6 @@ function setQuestion() {
             clearInterval(interval);
             endGame();
         })
-    }
-    else if (countSpan.textContent <= 0) {
-        endGame();
     }
 }
 
@@ -220,7 +216,6 @@ function init() {
         highScores = storedScores;
     }
 }
-
 
 function storeScores() {
     localStorage.setItem("scores", JSON.stringify(highScores));
